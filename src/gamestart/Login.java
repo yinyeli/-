@@ -31,31 +31,6 @@ public class Login extends JFrame implements ActionListener {
          * 设置各个组件排列位置
          */
         jf.setLayout(null);
-        JMenuBar menuBar = new JMenuBar();//创建并添加菜单栏
-        jf.getJMenuBar();
-        jf.setJMenuBar(menuBar);
-        JMenu menuFile = new JMenu("文件"),
-                menuScore = new JMenu("分数");
-        menuBar.add(menuFile);
-        menuBar.add(menuScore);
-        JMenuItem itemSave = new JMenuItem("生成分数排行表"),
-                itemScore = new JMenuItem("分数排行查看");
-
-        itemSave.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-//                saveScore();
-            }
-        });
-        itemScore.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-//                showScore();
-            }
-        });
-
-        menuFile.add(itemSave);
-        menuScore.add(itemScore);
 
         jlName.setBounds(20, 20, 80, 26);
         jf.add(jlName);
@@ -94,45 +69,6 @@ public class Login extends JFrame implements ActionListener {
 
     }
 
-
-
-
-//    private void showScore() {
-//        String s = sendMessageAndGet("1" + "#&" + "2" + "#&" + "Score#&");
-//        String[] sco = s.split("##&");
-//        ArrayList<Integer> scoList = new ArrayList<>();
-//        JFrame jf2 = new JFrame("分数显示");
-//        jf2.setBounds(350, 250, 500, 500);
-//        JTextArea jTextArea = new JTextArea();
-//
-//        for (int i = 0; i < sco.length - 1; i++) {
-//            int d = Integer.parseInt(sco[i]);
-//            scoList.add(d);
-//        }
-//
-//        Collections.sort(scoList, new Comparator<Integer>() {
-//            @Override
-//            public int compare(Integer o1, Integer o2) {
-//                if (o1 > o2) {
-//                    return -1;
-//                } else {
-//                    return 1;
-//                }
-//            }
-//        });//排序
-//        for (int i = 0; i < scoList.size(); i++) {
-//            jTextArea.append("第" + (i + 1) + "名 ：  ");
-//            jTextArea.append(scoList.get(i) + "\r\n");
-//        }
-//        jTextArea.setEditable(false);//不可更改
-//        JScrollPane js = new JScrollPane(jTextArea);
-//        jf2.add(js);
-//
-//        jf2.setResizable(false);
-//        jf2.setVisible(true);
-//        jf2.setDefaultCloseOperation(HIDE_ON_CLOSE);
-////        System.out.println("showScore OK!");
-//    }
 
 
     public static void main(String args[]) {
