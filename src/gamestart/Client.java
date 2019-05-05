@@ -24,11 +24,9 @@ public class Client {
     static int ENEMYMOVESPEED_MIN = 1;//敌军移动（每步间隔时间）最快速度:t 最小
     static int ENEMYADD = 3;//敌军生成时间间隔/秒
     static int ENEMY_NUMS = 6;//敌军出现的最多个数
-    private static final int PORT = 6666;
     private int score = 0;//score = time*( (100/ENEMYMOVESPEED_MAX) + 10 / ENEMYMOVESPEED_MI + 30 / ENEMYADD + ENEMY_NUMS)
     static int ENEMYSPEED = 15;//敌军移动格数
     private JFrame jf;//窗口
-    private static Thread tjf;
     private static Thread tEnemy;//敌军移动线程
     private static Thread tNewOne;//产生新的敌军
     private static Thread tdisplayWords;
@@ -36,26 +34,27 @@ public class Client {
     private int heroX;//hero x位置
     private int heroY;//hero y位置
     private HeroObject hero = new HeroObject();//实例化英雄机对象
-    private Boolean stopGame = true;//判断是否中途暂停
-    private String id;//用户的姓名
+    private Boolean pauseGame = true;//判断是否中途暂停
+    private String playerName;//用户的姓名
 
     public Client(String playerName) {
-        this.id = playerName;
+        this.playerName = playerName;
         showGUI();
     }
 
     private void showGUI() {
         jf = new JFrame("疯狂躲避");
         jf.setResizable(false);//不可更改大小
-        jf.setBounds(250, 190, 900, 700);//设置和窗口大小
+        jf.setBounds(250, 190, 900, 700);//设置和窗口大小,可更改
+//        jf.setBounds(250, 190, 600, 400);//设置和窗口大小
         jf.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
                 if (e.getKeyChar() == ' ') {
-                    if (stopGame) {
-                        stopGame = false;
+                    if (pauseGame) {
+                        pauseGame = false;
                     } else {
-                        stopGame = true;
+                        pauseGame = true;
                     }
                 }
             }
@@ -78,7 +77,7 @@ public class Client {
         playMusic();
         showHero();
         addEnemy();
-        displayWords(id);
+        displayWords(playerName);
     }
 
     private void showHero() {
@@ -96,7 +95,7 @@ public class Client {
             public void mouseMoved(MouseEvent e) {
                 heroX = e.getX() - heroJlable.getWidth() / 2;
                 heroY = e.getY() - heroJlable.getHeight();
-                if (!stopGame) {
+                if (!pauseGame) {
                     heroJlable.setLocation(heroX, heroY);
                     if (isOut(heroJlable)) {
                         //出界
@@ -112,7 +111,7 @@ public class Client {
             @Override
             public void run() {
                 while (true) {
-                    if ((enemyObjectArrayList.size() <= ENEMY_NUMS && !stopGame)) {
+                    if ((enemyObjectArrayList.size() <= ENEMY_NUMS && !pauseGame)) {
                         //敌人数量没有达到最大值
                         EnemyObject enemyObject = new EnemyObject();
                         enemyObjectArrayList.add(enemyObject);//敌人队列增加对象
@@ -162,7 +161,7 @@ public class Client {
                 }
                 while (true) {
                     //在边上,改变方向
-                    stopGameNow(stopGame);
+                    pauseGameNow(pauseGame);
                     isSideAndChange(eO);
                     if (eO.getCHANGE_D()) {
                         changeD(eO);
@@ -359,8 +358,8 @@ public class Client {
 
     }
 
-    private void stopGameNow(Boolean b) {
-        while (stopGame) {
+    private void pauseGameNow(Boolean b) {
+        while (pauseGame) {
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
@@ -389,7 +388,7 @@ public class Client {
                 while (true) {
                     score = t * (100/ENEMYMOVESPEED_MAX + 10 / ENEMYMOVESPEED_MIN + 30 / ENEMYADD + ENEMY_NUMS);
                     jw.setText(String.valueOf(score));
-                    if (!stopGame) {
+                    if (!pauseGame) {
                         t++;
                     }
                     try {
@@ -405,7 +404,7 @@ public class Client {
     }
 
     private void heroDie(){
-        stopGame = true;
+        pauseGame = true;
         JOptionPane.showMessageDialog(null, "Game Over!");
         JOptionPane.showMessageDialog(null, "Your score is" + score);
         jf.setVisible(false);
