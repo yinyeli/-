@@ -6,8 +6,8 @@ package gamestart; /**
  * 2017/12/1 20:46
  */
 
-import newObject.EnemyObject;
-import newObject.HeroObject;
+import objects.EnemyObject;
+import objects.HeroObject;
 import playMusic.music;
 
 import javax.swing.*;
@@ -38,8 +38,8 @@ public class Client {
     private Boolean stopGame = true;//判断是否中途暂停
     private String id;//用户的姓名
 
-    public Client(String id) {
-        this.id = id;
+    public Client(String playerName) {
+        this.id = playerName;
         showGUI();
     }
 

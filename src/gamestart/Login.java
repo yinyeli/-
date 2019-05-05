@@ -56,6 +56,7 @@ public class Login extends JFrame implements ActionListener {
          */
         if (e.getSource() == jbArray[0]){ // 点击gamestart 按钮
             try {
+                this.playerName = jtxtName.getText(); // 获取用户名字
                 Thread.sleep(1000);//睡眠1秒
                 jf.setVisible(false);
                 // 进入用户界面，关闭登录界面

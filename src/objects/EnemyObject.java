@@ -1,4 +1,4 @@
-package newObject;
+package objects;
 
 import javax.swing.*;
 import java.util.Random;
